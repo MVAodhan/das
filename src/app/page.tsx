@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
 import Image from "next/image";
 import { useState } from "react";
 
@@ -25,7 +25,6 @@ export default function Home() {
       });
 
       const data = await res.json();
-      console.log(data);
       if (data.message !== "ok") {
         setErrorMessage(data.message);
       }
@@ -37,6 +36,30 @@ export default function Home() {
     reader.readAsDataURL(file);
   };
 
+  const download = async () => {
+    const response = await fetch(removedBgURL);
+    // const response = await fetch("/image_emoji.png");
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    console.log(url);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "removed.png";
+    link.click();
+    link.remove();
+  };
+
+  const saveAndDownloadEmoji = async () => {
+    const res = await fetch("./api/emoji", {
+      method: "POST",
+      cache: "no-store",
+      body: JSON.stringify({
+        url: "https://replicate.delivery/pbxt/4J1D41xEg0oXIFISgbtJri3ffpVLsBzNRoBIsJmG1N5BmaDTA/out.png",
+      }),
+    });
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <input
@@ -46,12 +69,26 @@ export default function Home() {
       />
 
       {removedBgURL && (
-        <Image
-          src={removedBgURL}
-          height={200}
-          width={200}
-          alt="image with removed background"
-        />
+        <>
+          <Image
+            src={removedBgURL}
+            height={200}
+            width={200}
+            alt="image with removed background"
+          />
+          <Image
+            src={removedBgURL}
+            height={128}
+            width={128}
+            alt="image with removed background"
+          />
+          <button className="btn" onClick={download}>
+            Download Image
+          </button>
+          <button className="btn" onClick={saveAndDownloadEmoji}>
+            Save and Download Emoji
+          </button>
+        </>
       )}
     </main>
   );
