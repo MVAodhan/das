@@ -41,6 +41,7 @@ export default function Home() {
     // const response = await fetch("/image_emoji.png");
 
     const blob = await response.blob();
+
     const url = URL.createObjectURL(blob);
     console.log(url);
     const link = document.createElement("a");
@@ -58,6 +59,15 @@ export default function Home() {
         url: "https://replicate.delivery/pbxt/4J1D41xEg0oXIFISgbtJri3ffpVLsBzNRoBIsJmG1N5BmaDTA/out.png",
       }),
     });
+
+    const data = await res.json();
+    const blob = new Blob([data.resizedImg.data], { type: "image/png" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "emoji.png";
+    link.click();
+    link.remove();
   };
 
   return (

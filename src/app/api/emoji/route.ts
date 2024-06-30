@@ -12,6 +12,15 @@ console.log(body)
 
 const response = await fetch(body.url, {cache : 'no-store'}) 
 
+const blob = await response.blob()
+const imgBuffer = await blob.arrayBuffer()
+
+
+const resizedImg = await sharp(imgBuffer)
+.resize({ width: 128, height: 128 })
+.toBuffer()
+
+console.log(resizedImg)
 if (!response.body) {
     // Handle the case where the body is null or undefined
     console.error('Failed to fetch image');
@@ -21,15 +30,18 @@ if (!response.body) {
 const path = './public/image_emoji.png'
 const imageBody = response.body
 
-const readableStream = Readable.fromWeb(imageBody);
-const writableStream = fs.createWriteStream(path);
+
+
+// const readableStream = Readable.fromWeb(imageBody);
+// const writableStream = fs.createWriteStream(path);
 
 // const writableStream = Writable
-const transformer = sharp()
-  .resize(128)
-readableStream.pipe(transformer).pipe(writableStream);
+// const transformer = sharp()
+//   .resize(128)
+// readableStream.pipe(transformer).pipe(writableStream);
 
 return NextResponse.json({
-    message : 'ok'
+    message : 'ok',
+    resizedImg : resizedImg
 })
 }
