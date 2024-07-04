@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import Nav from "./componsents/Nav";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -48,29 +49,32 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <input
-        type="file"
-        className="file-input w-full max-w-xs"
-        onChange={makeRequest}
-      />
+    <>
+      <Nav />
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <input
+          type="file"
+          className="file-input w-full max-w-xs"
+          onChange={makeRequest}
+        />
 
-      {removedBgURL && (
-        <>
-          <Image
-            src={removedBgURL}
-            height={200}
-            width={200}
-            alt="image with removed background"
-          />
-          <button className="btn" onClick={downloadImage}>
-            Download Image
-          </button>
-          <button className="btn" onClick={downloadImage}>
-            Save Image
-          </button>
-        </>
-      )}
-    </main>
+        {removedBgURL && (
+          <>
+            <Image
+              src={removedBgURL}
+              height={200}
+              width={200}
+              alt="image with removed background"
+            />
+            <button className="btn" onClick={downloadImage}>
+              Download Image
+            </button>
+            <button className="btn" onClick={downloadImage}>
+              Save Image
+            </button>
+          </>
+        )}
+      </main>
+    </>
   );
 }
