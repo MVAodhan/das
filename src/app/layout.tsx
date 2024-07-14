@@ -4,13 +4,9 @@ import "./globals.css";
 
 import { Inter as FontSans } from "next/font/google";
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+
+import Nav from "./components/Nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,13 +28,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={"min-h-screen bg-background font-sans antialiased"}>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+        <body className={"h-screen bg-background font-sans antialiased"}>
+          <Nav />
           {children}
         </body>
       </html>
