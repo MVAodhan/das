@@ -6,14 +6,7 @@ const Nav = () => {
       <div className="flex w-1/2 ">
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
-      <div className="flex justify-end w-1/2 pr-5">
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </div>
+      <div className="flex justify-end w-1/2 pr-5"></div>
     </div>
   );
 };

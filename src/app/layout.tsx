@@ -6,7 +6,7 @@ import { Inter as FontSans } from "next/font/google";
 
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
 
-import Nav from "./components/Nav";
+import Nav from "./my-components/Nav";
 
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { convex } from "@/utils/convexProvider";
@@ -33,7 +33,6 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={"h-screen bg-background font-sans antialiased"}>
-          <Nav />
           <ConvexClientProvider>{children}</ConvexClientProvider>
         </body>
       </html>
