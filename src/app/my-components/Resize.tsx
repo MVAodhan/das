@@ -1,10 +1,9 @@
 "use client";
 
-import { Authenticated, useConvexAuth } from "convex/react";
 import Image from "next/image";
 import { useState } from "react";
 
-const Resize = () => {
+export default function Resize() {
   const [loading, setLoading] = useState(false);
   const [previewURL, setPreviewURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -87,16 +86,14 @@ const Resize = () => {
   };
   return (
     <main className="flex mt-10 flex-col items-center">
-      <Authenticated>
-        <div className=" flex justify-center">
-          <input
-            type="file"
-            accept="image/*"
-            className="file-input"
-            onChange={makeRequest}
-          />
-        </div>
-      </Authenticated>
+      <div className=" flex justify-center">
+        <input
+          type="file"
+          accept="image/*"
+          className="file-input"
+          onChange={makeRequest}
+        />
+      </div>
 
       {loading && <span className="loading loading-dots loading-lg" />}
       {errorMessage && <span>{errorMessage}</span>}
@@ -120,12 +117,4 @@ const Resize = () => {
       )}
     </main>
   );
-};
-
-function UnAuthenticatedMessage() {
-  const { isLoading, isAuthenticated } = useConvexAuth();
-
-  return <h1>Please Log in to remove bg and emojisize it</h1>;
 }
-
-export default Resize;

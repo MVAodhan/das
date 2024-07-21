@@ -8,10 +8,6 @@ import { ClerkProvider, useAuth } from "@clerk/nextjs";
 
 import Nav from "./my-components/Nav";
 
-import { ConvexProviderWithClerk } from "convex/react-clerk";
-import { convex } from "@/utils/convexProvider";
-import { ConvexClientProvider } from "./ConvexClientProvider";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -33,7 +29,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={"h-screen bg-background font-sans antialiased"}>
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          {children}
         </body>
       </html>
     </ClerkProvider>
