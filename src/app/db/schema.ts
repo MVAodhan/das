@@ -1,7 +1,6 @@
-import { numeric, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, text } from "drizzle-orm/pg-core";
 
 export const UserTable = pgTable("user", {
-  user_id: text("user_id").primaryKey().notNull(),
-  createTs: timestamp("create_ts").defaultNow().notNull(),
-  credits: numeric("credits"),
+  userId: text("user_id").primaryKey(),
+  credits: integer("credits"),
 });
