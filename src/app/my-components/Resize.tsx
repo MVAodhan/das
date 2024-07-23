@@ -1,13 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Resize() {
   const [loading, setLoading] = useState(false);
   const [previewURL, setPreviewURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [removedBgURL, setRemovedBgURL] = useState("");
+  const [credits, setCredits] = useState(0);
+
+  // const { userId } = useAuth();
+  // const getUserCredits = async () => {
+  //   const res = await fetch("/api/drizzle", { cache: "no-store" });
+  //   const data = await res.json();
+  //   console.log(data);
+  // };
+  // useEffect(() => {
+  //   if (userId) {
+  //     getUserCredits();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const makeRequest = async function (e: any) {
     setLoading(true);

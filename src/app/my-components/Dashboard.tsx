@@ -2,7 +2,18 @@ import Link from "next/link";
 
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Resize from "./Resize";
-export function Dashboard() {
+import { auth } from "@clerk/nextjs/server";
+import { db } from "../db";
+import { UserTable } from "../db/schema";
+import { eq } from "drizzle-orm";
+export async function Dashboard() {
+  const { userId } = auth();
+
+  const credits = await db
+    .select({ credits: UserTable.credits })
+    .from(UserTable)
+    .where(eq(UserTable.userId, userId!));
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -20,6 +31,7 @@ export function Dashboard() {
             <SignInButton />
           </SignedOut>
           <SignedIn>
+            {credits[0]?.credits && <span>Credits: {credits[0].credits}</span>}
             <UserButton />
           </SignedIn>
         </header>
