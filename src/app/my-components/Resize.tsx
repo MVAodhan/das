@@ -4,27 +4,17 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 
-export default function Resize() {
+export default function Resize({ credits }: { credits: number }) {
   const [loading, setLoading] = useState(false);
   const [previewURL, setPreviewURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [removedBgURL, setRemovedBgURL] = useState("");
-  const [credits, setCredits] = useState(0);
-
-  // const { userId } = useAuth();
-  // const getUserCredits = async () => {
-  //   const res = await fetch("/api/drizzle", { cache: "no-store" });
-  //   const data = await res.json();
-  //   console.log(data);
-  // };
-  // useEffect(() => {
-  //   if (userId) {
-  //     getUserCredits();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const makeRequest = async function (e: any) {
+    if (credits < 1) {
+      setErrorMessage("Not enough credits");
+      return;
+    }
     setLoading(true);
     const file = e.target.files[0];
 
@@ -111,7 +101,7 @@ export default function Resize() {
       </div>
 
       {loading && <span className="loading loading-dots loading-lg" />}
-      {errorMessage && <span>{errorMessage}</span>}
+      {errorMessage && <span className="text-red-500">{errorMessage}</span>}
       {removedBgURL && (
         <div className="flex flex-col items-center ">
           <Image

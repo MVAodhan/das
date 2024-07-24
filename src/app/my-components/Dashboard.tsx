@@ -14,6 +14,8 @@ export async function Dashboard() {
     .from(UserTable)
     .where(eq(UserTable.userId, userId!));
 
+  console.log(credits[0].credits);
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -31,7 +33,9 @@ export async function Dashboard() {
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            {credits[0]?.credits && <span>Credits: {credits[0].credits}</span>}
+            {credits[0]?.credits! > 1 && (
+              <span>Credits: {credits[0].credits}</span>
+            )}
             <UserButton />
           </SignedIn>
         </header>
@@ -44,7 +48,7 @@ export async function Dashboard() {
               <span>Please sign in to use the resizer</span>
             </SignedOut>
             <SignedIn>
-              <Resize />
+              <Resize credits={credits[0]?.credits!} />
             </SignedIn>
           </div>
         </main>
