@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
+import { inngest } from "@/inngest/client";
 
 export default function Resize({ credits }: { credits: number }) {
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,14 @@ export default function Resize({ credits }: { credits: number }) {
       if (data.message !== "ok") {
         setErrorMessage(data.message);
       }
+
+      const updated = await inngest.send({
+        name: "internal/credits.decrement",
+        data: {
+          credits: credits,
+          userId: "user_2jeCwOz1vA8KUcjdzBneIubYM6z",
+        },
+      });
 
       setRemovedBgURL(() => data.data.image);
       setLoading(false);
