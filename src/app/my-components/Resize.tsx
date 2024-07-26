@@ -2,14 +2,16 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
 import { inngest } from "@/inngest/client";
+import { useRouter } from "next/navigation";
 
 export default function Resize({ credits }: { credits: number }) {
   const [loading, setLoading] = useState(false);
   const [previewURL, setPreviewURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [removedBgURL, setRemovedBgURL] = useState("");
+
+  const router = useRouter();
 
   const makeRequest = async function (e: any) {
     if (credits < 1) {
@@ -60,6 +62,7 @@ export default function Resize({ credits }: { credits: number }) {
     link.download = "removed.png";
     link.click();
     link.remove();
+    router.refresh();
   };
 
   const downloadEmoji = async (e: any) => {
@@ -98,6 +101,7 @@ export default function Resize({ credits }: { credits: number }) {
 
     downloadImage();
   };
+
   return (
     <main className="flex mt-10 flex-col items-center">
       <div className=" flex justify-center">
